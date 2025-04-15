@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_books
+      author: admin
+      changes:
+        - createTable:
+            tableName: books
+            schemaName: public
+            columns:
+              - column:
+                  name: book_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: book_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: book_author
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: publishing_date
+                  type: date
+                  constraints:
+                    nullable: true
+        - addUniqueConstraint:
+            tableName: books
+            schemaName: public
+            constraintName: book_name_book_author
+            columnNames: book_name, book_author

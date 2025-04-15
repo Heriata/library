@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: admin
+      changes:
+        - createTable:
+            tableName: entries
+            schemaName: public
+            columns:
+              - column:
+                  name: entry_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: subscription_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: subscription_id
+                    references: subscriptions(subscription_id)
+              - column:
+                  name: book_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: book_id
+                    references: books(book_id)
+              - column:
+                  name: taken_date
+                  type: date
+                  constraints:
+                    nullable: true
