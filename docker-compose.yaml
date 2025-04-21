@@ -12,13 +12,60 @@ services:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
+    networks:
+      - library
   kafka:
     container_name: library_kafka
     image: apache/kafka:latest
     volumes:
       - kafka:/data/kafka
+#     todo: comment this section to launch in intellij Idea
+    environment:
+          KAFKA_BROKER_ID: 1
+          KAFKA_KRAFT_MODE: "true"
+          KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+          KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT, CONTROLLER:PLAINTEXT
+          KAFKA_LISTENERS: INTERNAL://kafka:9092, CONTROLLER://0.0.0.0:9093
+          KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092
+          KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+          KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+          KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+          KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+          KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+          KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+          KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+          KAFKA_PROCESS_ROLES: broker, controller
+          KAFKA_NODE_ID: 1
+    # todo: comment this section to launch in intellij Idea
     ports:
       - "9092:9092"
+    networks:
+      - library
+  library:
+    container_name: library_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: library
+      POSTGRES_PASSWORD: library
+      POSTGRES_HOST: postgresql
+      POSTGRES_PORT: "5432"
+      KAFKA_HOST: kafka
+#      KAFKA_HOST: localhost
+      KAFKA_PORT: "9092"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+      - kafka
+    networks:
+      - library
+
+networks:
+  library:
+    driver: bridge
+
 volumes:
   postgres:
   kafka:

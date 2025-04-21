@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,15 +28,16 @@ import java.time.LocalDate;
 public class BookEntryEntity {
     @Id
     @Column(name = "entry_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entry_seq")
+    @SequenceGenerator(name = "entry_seq", sequenceName = "entries_entry_id_seq", allocationSize = 1)
     private Long bookEntryId;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subscription_id", nullable = false)
     private SubscriptionEntity subscription;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private BookEntity book;
 

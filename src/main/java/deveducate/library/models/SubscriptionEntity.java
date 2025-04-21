@@ -24,11 +24,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "subscriptions", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-@SequenceGenerator(name = "subscription_seq", sequenceName = "subscriptions_subscription_id_seq")
 public class SubscriptionEntity {
     @Id
     @Column(name = "subscription_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_seq")
+    @SequenceGenerator(name = "subscription_seq", sequenceName = "subscriptions_subscription_id_seq", allocationSize = 1)
     private Long subscriptionId;
 
     @Column(name = "username")
@@ -41,6 +41,6 @@ public class SubscriptionEntity {
     private String userEmail;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "subscription", orphanRemoval = true, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "subscription", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<BookEntryEntity> books;
 }

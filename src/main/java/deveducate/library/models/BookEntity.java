@@ -21,11 +21,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books", uniqueConstraints = @UniqueConstraint(columnNames = {"book_name", "book_author"}))
-@SequenceGenerator(name = "book_seq", sequenceName = "books_book_id_seq")
 public class BookEntity {
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
+    @SequenceGenerator(name = "book_seq", sequenceName = "books_book_id_seq", allocationSize = 1)
     private Long bookId;
     @Column(name = "book_name")
     private String bookName;

@@ -26,8 +26,8 @@ public class SubscriptionController implements GlobalController {
     @GetMapping
     @Operation(summary = "Get Subscription info", description = "Get detailed subscription info of Who, When and took What")
     public ResponseEntity<List<SubscriptionEntity>> getUser(@RequestParam String fullName,
-                                                            @RequestParam int page,
-                                                            @RequestParam int size) {
+                                                            @RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
         log.info("Getting subscription for {}", fullName);
         PageRequest pageRequest = PageRequest.of(page, size);
         List<SubscriptionEntity> list = subscriptionService.getForName(fullName, pageRequest);

@@ -1,7 +1,6 @@
 package deveducate.library.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import deveducate.library.aspect.Benchmark;
 import deveducate.library.dtos.SubscriptionBookDto;
@@ -31,6 +30,7 @@ public class MessagesProcessingService {
     private final BookEntryRepository bookEntryRepository;
     private final ObjectMapper objectMapper;
     private final EntityManager entityManager;
+    private static int a = 0;
 
     private ArrayList<BookEntryEntity> bookEntries;
 
@@ -46,8 +46,7 @@ public class MessagesProcessingService {
         records.forEach(x -> {
             SubscriptionBookDto dto;
             try {
-                dto = objectMapper.readValue(x.value(), new TypeReference<>() {
-                });
+                dto = objectMapper.readValue(x.value(), SubscriptionBookDto.class);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -61,7 +60,8 @@ public class MessagesProcessingService {
 
         bookEntryRepository.saveAll(bookEntries);
 
-        log.info("[-] Processed records: {}", records.count());
+        log.info("[-] Saved records: {}", a);
+        a = 0;
     }
 
     private BookEntryEntity getBookEntryEntity(BookEntity bookEntity, SubscriptionEntity subscriptionEntity) {
@@ -72,6 +72,7 @@ public class MessagesProcessingService {
                     .book(bookEntity)
                     .build();
             entityManager.persist(bookEntryEntity);
+            a++;
         }
         return bookEntryEntity;
     }

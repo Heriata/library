@@ -53,6 +53,7 @@ public class KafkaConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, LIBRARY_GROUP_ID);
+        props.put(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, "3000");
 
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
@@ -76,6 +77,11 @@ public class KafkaConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+//        props.put(ProducerConfig.MAX_BLOCK_MS_CONFIG, "1000");
+//        props.put(ProducerConfig.RETRIES_CONFIG, "5");
+        props.put(ProducerConfig.RETRY_BACKOFF_MS_CONFIG, "5000");
+        props.put(ProducerConfig.RETRY_BACKOFF_MAX_MS_CONFIG, "5000");
+//        props.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, "10000");
         return new DefaultKafkaProducerFactory<>(props,
                 new StringSerializer(),
                 new JsonSerializer<>());

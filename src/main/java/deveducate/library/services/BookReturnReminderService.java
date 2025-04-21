@@ -18,10 +18,8 @@ public class BookReturnReminderService {
     private final SubscriptionRepository subscriptionRepository;
     private final NotificationService notificationService;
 
-    // every 30 seconds
-    // use "0 0 0 * * *" for everyday check
     @Transactional(readOnly = true)
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void bookReturnReminder() {
 
         List<ReturnReminderProjection> subscriptions = subscriptionRepository.findAllWhereTakenDateIsOlder();

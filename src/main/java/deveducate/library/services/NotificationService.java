@@ -35,7 +35,7 @@ public class NotificationService {
     private void sendNotification(String email, String body) {
         MockJavaMailSender.Message message = mockJavaMailSender.createMimeMessage();
 
-        message.setEmail(email);
+        message.setEmail(email == null? "N/A":email);
         message.setSubject(NotificationService.SUBJECT);
         message.setBody(body);
 

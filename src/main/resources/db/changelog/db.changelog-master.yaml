@@ -8,9 +8,9 @@ databaseChangeLog:
   - include:
       file: changelogs/create_table_entries.yaml
       relativeToChangelogFile: true
-  - include:
-      file: changelogs/scripts/truncate.sql
-      relativeToChangelogFile: true
-  - include:
-      file: changelogs/scripts/init.sql
-      relativeToChangelogFile: true
+#  - include:
+#      file: changelogs/scripts/truncate.sql
+#      relativeToChangelogFile: true
+#  - include:
+#      file: changelogs/scripts/init.sql
+#      relativeToChangelogFile: true

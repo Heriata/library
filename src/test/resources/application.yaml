@@ -4,37 +4,48 @@ server:
     context-path: /library
 
 spring:
+  profiles:
+    active: test
   application:
     name: library
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/library
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    username: library
+    password: library
     driver-class-name: org.postgresql.Driver
   liquibase:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/library
-    password: ${POSTGRES_PASSWORD}
-    user: ${POSTGRES_USER}
+    password: library
+    user: library
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
     driver-class-name: org.postgresql.Driver
-  config:
-    import: optional:file:.env[.properties]
   kafka:
+
+    admin:
+      fail-fast: true
     consumer:
       group-id: library
-      bootstrap-servers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+      bootstrap-servers: localhost:9092
       max-poll-records: 250
+      fetch-max-wait: 1000
+    retry:
+      topic:
+        backoff:
+          delay: 10s
+    listener:
+      poll-timeout: 1000
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: false
     properties:
       hibernate:
-#        generate_statistics: true
         order_updates: true
         jdbc:
           batch_size: 50
+  testcontainers:
+    dynamic-property-registry-injection: allow
 kafka:
   topic:
     - library
@@ -52,8 +63,10 @@ logging:
   level:
     org:
       springframework:
+        boot:
+          autoconfigure:
+            logging: off
 #        transaction:
 #          interceptor: trace
-        security: info
     web: info
     liquibase: info
