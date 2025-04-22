@@ -31,7 +31,7 @@ public class ExcelDataUploadControllerTest extends TestContainerConfig {
     @SneakyThrows
     @DisplayName("Should return Ok when JSON string provided")
     @ParameterizedTest
-    @MethodSource("deveducate.library.utils.ArgumentProvider#provideArguments")
+    @MethodSource("deveducate.library.utils.ArgumentProvider#provideJSON")
     public void testExcelDataUploadString(String data) {
 
         mockMvc.perform(MockMvcRequestBuilders

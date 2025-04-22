@@ -30,7 +30,9 @@ public class ExcelDataUploadController implements GlobalController {
     @Operation(summary = "Send JSON file")
     @PostMapping(value= "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CompletableFuture<ResponseEntity<Void>> asyncUpload(@RequestPart("file") MultipartFile file) {
-        if (file.isEmpty()) return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+        if (file.isEmpty()) {
+            return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+        }
         excelDataHandlerService.sendDataToKafka(file);
         return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
     }
@@ -38,7 +40,9 @@ public class ExcelDataUploadController implements GlobalController {
     @Operation(summary = "Send String")
     @PostMapping
     public CompletableFuture<ResponseEntity<Void>> asyncUpload(@RequestBody String file) {
-        if (file.isEmpty()) return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+        if (file.isEmpty()) {
+            return CompletableFuture.completedFuture(new ResponseEntity<>(HttpStatus.OK));
+        }
         excelDataHandlerService.sendDataToKafka(file);
 
 

@@ -21,7 +21,7 @@ public class ArgumentProvider {
     private static final String SAME_BOOK_NAME = "sameName";
     private static final String SAME_USERNAME = "sameUsername";
 
-    public static Stream<Arguments> provideArguments() {
+    public static Stream<Arguments> provideJSON() {
         return Stream.of(
                 Arguments.of("{data:[{\"username\":\"mboyseqw\",\"userFullName\":\"Eada Lattimer\",\"userActive\":true,\"bookName\":\"The Da Vinci Code\",\"bookAuthor\":\"Melba Boyse\"}]}")
         );

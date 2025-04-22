@@ -1,5 +1,5 @@
 ## Library Service
-Service for library subscription management. For file upload use [Excel Data Upload Controller](excel),<p>
+Service for library subscription management. For "excel_as_json_data migration" use [Excel Data Upload Controller](excel),
 for subscription information use [Subscription Controller](info).
 ### Java 17, Spring Boot, Spring Data, Apache Kafka, Postgresql, Mapstruct
 
@@ -12,7 +12,7 @@ Swagger:<p><code>http://localhost:8080/library/swagger-ui/index.html</code><p>
   -H 'Content-Type: application/json' \
   -d
   '{
-  data:[		
+  data:[  
   {
   "username":"same",
   "userFullName":"Dukie Beament",
@@ -29,5 +29,9 @@ Swagger:<p><code>http://localhost:8080/library/swagger-ui/index.html</code><p>
 Check files in <code>mock_data</code><p>
 
 To start Kafka and Postgresql containers use: <code>docker compose up -d</code><p>
-Excel Data Upload Controller -> consumes JSON file, parses and sends to Kafka for high throughput<p>
-Subscription Controller -> provides information about subscription
+To start the whole application as docker container use: <code>docker compose up -d --build</code><p>
+### Description
+
+Excel Data Upload Controller -> consumes JSON file, parses and sends to Kafka for high throughput.<p>
+MessageProcessingService -> reads batches from Kafka, verifies and saves batches in database.
+Subscription Controller -> provides information about subscription by user full name.

@@ -19,7 +19,7 @@ services:
     image: apache/kafka:latest
     volumes:
       - kafka:/data/kafka
-#     todo: comment this section to launch in intellij Idea
+#     fixme: comment this section to launch in intellij Idea
     environment:
           KAFKA_BROKER_ID: 1
           KAFKA_KRAFT_MODE: "true"
@@ -36,7 +36,7 @@ services:
           KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
           KAFKA_PROCESS_ROLES: broker, controller
           KAFKA_NODE_ID: 1
-    # todo: comment this section to launch in intellij Idea
+    # fixme: comment this section to launch in intellij Idea
     ports:
       - "9092:9092"
     networks:
@@ -52,7 +52,6 @@ services:
       POSTGRES_HOST: postgresql
       POSTGRES_PORT: "5432"
       KAFKA_HOST: kafka
-#      KAFKA_HOST: localhost
       KAFKA_PORT: "9092"
     ports:
       - "8080:8080"
